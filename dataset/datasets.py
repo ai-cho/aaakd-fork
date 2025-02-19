@@ -105,7 +105,8 @@ class DatasetBuilder:
 
         elif self.args.dataset == 'caltech256':
             dataset = datasets.ImageFolder(
-                root=os.path.join(self.args.data_path, "caltech256/256_ObjectCategories"), 
+                # root=os.path.join(self.args.data_path, "caltech256/256_ObjectCategories"), 
+                root='/content/AAAKD/dataset/caltech256/256_ObjectCategories',
                 transform=transform
             )
         elif self.args.dataset == 'flowers':
