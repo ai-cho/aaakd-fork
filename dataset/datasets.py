@@ -112,7 +112,7 @@ class DatasetBuilder:
 
             dataset = datasets.ImageFolder(
                 # root=os.path.join(self.args.data_path, "flowers/train"),
-                root='/workspace/AAAKD/dataset/flowers/train',
+                root='/content/AAAKD/dataset/flowers/train',
                 transform=transform
             )
         else:
