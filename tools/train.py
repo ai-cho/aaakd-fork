@@ -321,8 +321,8 @@ def main():
                                         train_loader = train_loader,
                                         criterion = criterion_distillation,
                                         optimizer = optimizer,
-                                        loss_scaler = loss_scaler,
-                                        clip_grad = args.clip_grad,
+                                        # loss_scaler = loss_scaler,
+                                        # clip_grad = args.clip_grad,
                                         loss_scaler = loss_scaler,
                                         clip_grad = args.clip_grad,
                                         mixup_fn = mixup_fn,
@@ -352,7 +352,7 @@ def main():
                 'model': get_model_state(student_model),
                 'optimizer': optimizer.state_dict(),
                 'scheduler': scheduler.state_dict(),
-                'scaler': loss_scaler.state_dict(),
+                # 'scaler': loss_scaler.state_dict(),
                 'scaler': loss_scaler.state_dict(),
             }, is_best=is_best, filename=f'{args.save_dir}/checkpoint.pth') 
 
