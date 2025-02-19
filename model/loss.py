@@ -5,7 +5,7 @@ import torch.nn as nn
 from model.models import forward_with_features
 from model.misc import random_masking, saliency_masking
 import math
-from geomloss import SamplesLoss
+# from geomloss import SamplesLoss
 
 """
 !!student & teacher model 간의 관계!!
