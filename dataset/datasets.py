@@ -102,19 +102,18 @@ class DatasetBuilder:
                 transform=transform,
                 download=True
             )
+
         elif self.args.dataset == 'caltech256':
-            dataset = datasets.Caltech256(
-                root=self.args.data_path,
-                transform=transform,
-                download=True
+            dataset = datasets.ImageFolder(
+                root=os.path.join(self.args.data_path, "caltech256/256_ObjectCategories"), 
+                transform=transform
             )
         elif self.args.dataset == 'flowers':
-            split = 'train' if is_train else 'val'
-            dataset = datasets.Flowers102(
-                root=self.args.data_path,
-                split=split,
-                transform=transform,
-                download=True
+
+            dataset = datasets.ImageFolder(
+                # root=os.path.join(self.args.data_path, "flowers/train"),
+                root='/workspace/AAAKD/dataset/flowers/train',
+                transform=transform
             )
         else:
             split = 'train' if is_train else 'val'
