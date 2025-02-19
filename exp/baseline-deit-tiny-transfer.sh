@@ -34,34 +34,34 @@ CUDA_VISIBLE_DEVICES=$GPU_IDS torchrun --nproc_per_node=$NUM_GPUS --master_port 
     --student-model deit_tiny_patch16_224 \
     --teacher-model deit_small_distilled_patch16_224 \
     --dataset flowers \
-    --data-path /root/workspace/tactile_llava/dataset/gpt_instruction/misc/AAAKD/dataset \
+    --data-path content/AAAKD/dataset \
     --finetune \
-    --checkpoint /root/workspace/tactile_llava/dataset/gpt_instruction/misc/AAAKD/checkpoints/baseline-deit-tiny/checkpoint.pth \
-    --epochs 1000 \
+    --checkpoint /content/drive/MyDrive/checkpoint_distkd.best.pth \
+    --epochs 500 \
     --batch-size 512 \
     --lr 5e-4 \
     --weight-decay 1e-4 \
     --gpus $GPU_IDS \
     --distillation-type none \
-    --log-file logs/baseline-deit-tiny-flowers.log \
-    --save-dir checkpoints/baseline-deit-tiny-flowers \
+    --log-file logs/new_distkd-deit-tiny-flowers.log \
+    --save-dir checkpoints/new_distkd-deit-tiny-flowers \
     --wandb \
-    --wandb-project AAAKD
+    --wandb-project AAAKD_finetuning
 
 CUDA_VISIBLE_DEVICES=$GPU_IDS torchrun --nproc_per_node=$NUM_GPUS --master_port $MASTER_PORT tools/train.py \
     --student-model deit_tiny_patch16_224 \
     --teacher-model deit_small_distilled_patch16_224 \
     --dataset caltech256 \
-    --data-path /root/workspace/tactile_llava/dataset/gpt_instruction/misc/AAAKD/dataset \
+    --data-path /content/AAAKD/dataset \
     --finetune \
-    --checkpoint /root/workspace/tactile_llava/dataset/gpt_instruction/misc/AAAKD/checkpoints/baseline-deit-tiny/checkpoint.pth \
-    --epochs 1000 \
+    --checkpoint /content/drive/MyDrive/checkpoint_distkd.best.pth \
+    --epochs 500 \
     --batch-size 512 \
     --lr 5e-4 \
     --weight-decay 1e-4 \
     --gpus $GPU_IDS \
     --distillation-type none \
-    --log-file logs/baseline-deit-tiny-caltech256.log \
-    --save-dir checkpoints/baseline-deit-tiny-caltech256 \
+    --log-file logs/distkd-deit-tiny-caltech256.log \
+    --save-dir checkpoints/distkd-deit-tiny-caltech256 \
     --wandb \
-    --wandb-project AAAKD
+    --wandb-project AAAKD_finetuning
