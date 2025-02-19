@@ -6,7 +6,7 @@ from model.models import forward_with_features
 from model.models import forward_with_features
 
 def train_one_epoch(student_model, teacher_model, train_loader, criterion, optimizer, loss_scaler, clip_grad, mixup_fn, model_ema, device, epoch, args):
-def train_one_epoch(student_model, teacher_model, train_loader, criterion, optimizer, loss_scaler, clip_grad, mixup_fn, model_ema, device, epoch, args):
+# def train_one_epoch(student_model, teacher_model, train_loader, criterion, optimizer, loss_scaler, clip_grad, mixup_fn, model_ema, device, epoch, args):
     student_model.train()
     teacher_model.eval()
     metric_logger = MetricLogger()
@@ -19,7 +19,10 @@ def train_one_epoch(student_model, teacher_model, train_loader, criterion, optim
             
         samples = samples.to(device, non_blocking=True)
         targets = targets.to(device, non_blocking=True)
+        # print(samples.shape)
+        # print(targets.shape)
 
+        # print(student_model)
         if args.amp:    
             with torch.cuda.amp.autocast(enabled=True):
                 if args.distillation_type.lower() in ['soft', 'hard']:
@@ -27,22 +30,22 @@ def train_one_epoch(student_model, teacher_model, train_loader, criterion, optim
                     student_feats = None
                 else:
                     student_logits, student_feats = forward_with_features(student_model, samples)
-                if args.distillation_type.lower() in ['soft', 'hard']:
-                    student_logits = student_model(samples)
-                    student_feats = None
-                else:
-                    student_logits, student_feats = forward_with_features(student_model, samples)
+                # if args.distillation_type.lower() in ['soft', 'hard']:
+                #     student_logits = student_model(samples)
+                #     student_feats = None
+                # else:
+                #     student_logits, student_feats = forward_with_features(student_model, samples)
         else:
             if args.distillation_type.lower() in ['soft', 'hard']:
                 student_logits = student_model(samples)
                 student_feats = None
             else:
                 student_logits, student_feats = forward_with_features(student_model, samples)
-            if args.distillation_type.lower() in ['soft', 'hard']:
-                student_logits = student_model(samples)
-                student_feats = None
-            else:
-                student_logits, student_feats = forward_with_features(student_model, samples)
+            # if args.distillation_type.lower() in ['soft', 'hard']:
+            #     student_logits = student_model(samples)
+            #     student_feats = None
+            # else:
+            #     student_logits, student_feats = forward_with_features(student_model, samples)
 
         args.current_epoch = epoch
         loss = criterion(samples, student_logits, student_model, student_feats, targets, args)
@@ -61,9 +64,9 @@ def train_one_epoch(student_model, teacher_model, train_loader, criterion, optim
         loss_scaler(loss, optimizer, clip_grad=clip_grad,
                     parameters=student_model.parameters(), create_graph=is_second_order)
         # this attribute is added by timm on one optimizer (adahessian)
-        is_second_order = hasattr(optimizer, 'is_second_order') and optimizer.is_second_order
-        loss_scaler(loss, optimizer, clip_grad=clip_grad,
-                    parameters=student_model.parameters(), create_graph=is_second_order)
+        # is_second_order = hasattr(optimizer, 'is_second_order') and optimizer.is_second_order
+        # loss_scaler(loss, optimizer, clip_grad=clip_grad,
+        #             parameters=student_model.parameters(), create_graph=is_second_order)
         
         if model_ema is not None:
             model_ema.update(student_model)
