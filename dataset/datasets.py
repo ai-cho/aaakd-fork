@@ -41,7 +41,7 @@ DATASET_STATS = {
     'flowers': {
         'mean': (0.4489, 0.4180, 0.3176),
         'std': (0.2605, 0.2506, 0.2792),
-        'num_classes': 102,
+        'num_classes': 5,
     },
 }
 
